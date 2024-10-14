@@ -1,0 +1,46 @@
+path: .
+app:
+  uid: 61104
+  title: MyOrg ES Additions
+  appid: myorg_es_additions
+  version: 0.0.1
+  description: description of app
+  prefix: myorg_es
+  label: Custom Splunk ES Content Pack
+  author_name: Will Searle
+  author_email: will@livehybrid.com
+  author_company: LiveHybrid
+verbose: false
+enrichments: false
+build_app: true
+build_api: false
+data_source_TA_validation: false
+build_path: dist
+mode: {}
+post_test_behavior: pause_on_failure
+enable_integration_testing: false
+test_instance:
+  model_config: false
+  splunk_app_username: admin
+  splunk_app_password: password
+  instance_address: localhost
+  hec_port: 62004
+  web_ui_port: 62003
+container_settings:
+  leave_running: true
+  num_containers: 1
+  api_port: 61951
+#  full_image_path: splunk-ubuntu:latest
+apps:
+  - uid: 1621
+    title: Splunk Common Information Model (CIM)
+    appid: Splunk_SA_CIM
+    version: 5.2.0
+    description: description of app
+    hardcoded_path: https://attack-range-appbinaries.s3.us-west-2.amazonaws.com/Latest/splunk-common-information-model-cim_520.tgz
+  - uid: 3110
+    title: Splunk Add-on for Microsoft Cloud Services
+    appid: SPLUNK_TA_MICROSOFT_CLOUD_SERVICES
+    version: 5.2.2
+    description: description of app
+    hardcoded_path: https://attack-range-appbinaries.s3.us-west-2.amazonaws.com/Latest/splunk-add-on-for-microsoft-cloud-services_522.tgz

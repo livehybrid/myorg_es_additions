@@ -1,0 +1,108 @@
+name: Github Enterprise Audit
+id: f8bdc6e1-3660-4860-b7c0-6475140a6329
+version: 1
+date: "2024-11-05"
+author: Will Searle, LiveHybrid
+description: Data source object for GitHub Enterprise Audit - Hook Destroy
+source: github_json
+sourcetype: github_json
+separator: document_id
+supported_TA:
+  - name: GitHub App for Splunk
+    url: https://splunkbase.splunk.com/app/5596
+    version: 1.3.1
+fields:
+  - "@timestamp"
+  - action
+  - active
+  - actor
+  - actor_id
+  - actor_is_bot
+  - actor_location.country_code
+  - audit_log_stream_enabled
+  - audit_log_stream_id
+  - audit_log_stream_result
+  - audit_log_stream_sink
+  - audit_log_stream_sink_details
+  - business
+  - business_id
+  - config.content_type
+  - config.insecure_ssl
+  - config.url
+  - created_at
+  - document_id
+  - events{}
+  - eventtype
+  - hook_id
+  - host
+  - index
+  - linecount
+  - name
+  - new_splunk_domain
+  - oauth_application
+  - oauth_application_id
+  - old_splunk_domain
+  - operation_type
+  - org
+  - org_id
+  - organization_upgrade
+  - owner_type
+  - permission
+  - public_repo
+  - punct
+  - reason
+  - repo
+  - repo_id
+  - request_category
+  - secrets_updated{}
+  - source
+  - sourcetype
+  - splunk_server
+  - splunk_server_group
+  - tag
+  - tag::eventtype
+  - user
+  - user_agent
+  - user_id
+  - visibility
+field_mappings:
+  - data_model: cim
+    data_set: Endpoint.Processes
+    mapping:
+      ProcessGuid: Processes.process_guid
+      ProcessId: Processes.process_id
+      Image: Processes.process_path
+      Image|endswith: Processes.process_name
+      CommandLine: Processes.process
+      CurrentDirectory: Processes.process_current_directory
+      User: Processes.user
+      IntegrityLevel: Processes.process_integrity_level
+      Hashes: Processes.process_hash
+      ParentProcessGuid: Processes.parent_process_guid
+      ParentProcessId: Processes.parent_process_id
+      ParentImage: Processes.parent_process_name
+      ParentCommandLine: Processes.parent_process
+      Computer: Processes.dest
+      OriginalFileName: Processes.original_file_name
+convert_to_log_source:
+  - data_source: Windows Event Log Security 4688
+    mapping:
+      ProcessId: NewProcessId
+      Image: NewProcessName
+      Image|endswith: NewProcessName|endswith
+      CommandLine: Process_Command_Line
+      User: SubjectUserSid
+      ParentProcessId: ProcessId
+      ParentImage: ParentProcessName
+      ParentImage|endswith: ParentProcessName|endswith
+      Computer: Computer
+      OriginalFileName: NewProcessName|endswith
+  - data_source: Crowdstrike Process
+    mapping:
+      ProcessId: RawProcessId
+      Image: ImageFileName
+      CommandLine: CommandLine
+      User: UserSid
+      ParentProcessId: ParentProcessId
+      ParentImage: ParentBaseFileName
+example_log: '{"@timestamp":1728664702564,"_document_id":"nMKcY-S_eX_M9__NvAFkYw","action":"hook.destroy","active":true,"actor":"livehybrid","actor_id":5527349,"actor_is_bot":false,"actor_location":{"country_code":"GB"},"business":"livehybrid-demo","business_id":240727,"config":{"content_type":"form","insecure_ssl":"0"},"created_at":1728664702564,"events":[],"hook_id":506780914,"name":"webhook","operation_type":"remove","user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"}'

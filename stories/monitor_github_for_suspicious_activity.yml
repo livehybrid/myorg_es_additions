@@ -1,0 +1,20 @@
+name: Monitor GitHub for Suspicious Activity
+id: 665f6f41-b588-4085-abf7-18ac91152d00
+version: 1
+date: "2024-11-12"
+author: Will Searle, LiveHybrid
+description: "Keep an eye on your GitHub Enterprise environment to identify and investigate unusual or unauthorized activities.
+  This analytic story leverages audit data from GitHub to help you monitor critical actions such as repository changes, access to sensitive repositories, privilege escalations, and suspicious login patterns.
+  Regularly tracking these activities can help detect compromised accounts, insider threats, or unauthorized access attempts that could put code integrity and intellectual property at risk."
+narrative: "As organizations increasingly rely on GitHub for code management, its vital to monitor access and change activities closely.
+  Unauthorized changes or unauthorized access to repositories may indicate a compromise or an internal security issue. With this analytic story, you can establish a baseline of typical actions, identify deviations from that norm, and get early warnings about suspicious or malicious behavior in your GitHub environment."
+references:
+  - https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise
+tags:
+  category:
+    - Cloud Security
+  product:
+    - Splunk Enterprise
+    - Splunk Enterprise Security
+    - Splunk Cloud
+  usecase: Security Monitoring

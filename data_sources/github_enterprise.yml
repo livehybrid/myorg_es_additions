@@ -1,0 +1,13 @@
+name: Github Enterprise
+id: 5c9920cc-3583-48eb-afea-38041b9b74c0
+version: 1
+date: "2024-11-05"
+author: Will Searle, LiveHybrid
+description: Data source object for GitHub Enterprise
+source: github_json
+sourcetype: github_json
+separator: document_id
+supported_TA:
+  - name: GitHub App for Splunk
+    url: https://splunkbase.splunk.com/app/5596
+    version: 1.3.1

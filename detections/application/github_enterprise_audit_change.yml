@@ -1,0 +1,64 @@
+name: Github Enterprise Audit Change
+id: 24ba82a8-8306-417c-b009-c1522aa21983
+version: 1
+date: "2024-11-05"
+author: Will Searle
+data_sources:
+  - Github Enterprise
+status: production
+type: Anomaly
+description: UPDATE_DESCRIPTION
+search: '`github_json` action IN ("hook.destroy") | `github_enterprise_audit_change_filter` | table _time actor action business *'
+how_to_implement: UPDATE_HOW_TO_IMPLEMENT
+known_false_positives: UPDATE_KNOWN_FALSE_POSITIVES
+references:
+  - https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise
+  - https://www.redhat.com/en/topics/devops/what-is-devsecops
+drilldown_searches:
+  - name: View the detection results for - "$repository$"
+    search: "%original_detection_search% action=$action$"
+    earliest_offset: $info_min_time$
+    latest_offset: $info_max_time$
+  - name: View actions from actor=$actor$ in last 24 hours
+    search: "index=common_github actor=$actor$"
+    earliest_offset: "-24h"
+    latest_offset: "now"
+tags:
+  analytic_story:
+    - Dev Sec Ops
+    - "Monitor GitHub for Suspicious Activity"
+  asset_type: GitHub
+  confidence: 80
+  impact: 80
+  message: Audit destination for Github Enterprise has been modified
+  mitre_attack_id:
+    - T1562.001
+    - T1195.002
+    - T1195
+  observable:
+    - name: actor
+      type: User
+      role:
+        - Attacker
+    - name: business
+      type: Endpoint
+      role:
+        - Victim
+  product:
+    - Splunk Enterprise
+    - Splunk Enterprise Security
+    - Splunk Cloud
+  required_fields:
+    - actor
+    - action
+    # - enterprise
+    # - repo
+  risk_score: 64
+  security_domain: audit
+tests:
+  - name: True Positive Test
+    attack_data:
+      - data: ./data_sources/raw/github_enterprise_audit.txt
+        sourcetype: github_json
+        source: github_json
+        custom_index: common_github
